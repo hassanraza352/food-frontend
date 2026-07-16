@@ -1,0 +1,29 @@
+.panel-top h1{font-size:1rem;}
+.timeline{position:relative; margin:6px 0 26px; padding-left:6px;}
+.timeline li{display:flex; gap:16px; padding-bottom:26px; position:relative;}
+.timeline li:not(:last-child)::before{
+  content:""; position:absolute; left:14px; top:30px; bottom:-6px; width:2px; background:var(--line);
+}
+.timeline li.done:not(:last-child)::before{background:var(--green);}
+.tl-dot{
+  width:30px; height:30px; min-width:30px; border-radius:50%; display:grid; place-items:center;
+  font-size:0.85rem; font-weight:700; background:var(--line); color:var(--muted); z-index:1;
+}
+.timeline li.done .tl-dot{background:var(--green); color:#fff;}
+.timeline li.current .tl-dot{background:var(--orange); color:#fff;}
+.timeline li strong{font-size:0.92rem;}
+.timeline li p{font-size:0.78rem; margin-top:2px;}
+.timeline li.pending strong, .timeline li.pending p{color:var(--muted);}
+
+@keyframes tlPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,90,54,0.45);}
+  50%{box-shadow:0 0 0 8px rgba(255,90,54,0);}
+}
+.tl-dot.pulse{animation:tlPulse 1.6s ease-in-out infinite;}
+
+/* ---------- mobile responsive ---------- */
+@media (max-width:480px){
+  .panel-top{flex-wrap:wrap; gap:8px;}
+  .timeline li{padding-bottom:22px;}
+  .tl-dot{width:26px; height:26px; min-width:26px; font-size:0.75rem;}
+}

@@ -1,0 +1,20 @@
+.block-label{display:block; font-size:0.82rem; font-weight:700; color:var(--ink-soft); margin-bottom:10px;}
+.small-link{font-size:0.78rem; font-weight:700;}
+.address-box{
+  display:flex; align-items:center; gap:12px; background:var(--cream); border-radius:14px; padding:14px 16px;
+}
+.addr-icon{font-size:1.2rem;}
+.address-box p{font-size:0.8rem;}
+
+.pay-option{
+  display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:14px; border:1.5px solid var(--line);
+  margin-bottom:10px; cursor:pointer; transition:all .2s ease; font-size:0.9rem; font-weight:600;
+}
+.pay-option.selected{border-color:var(--orange); background:rgba(255,90,54,0.06);}
+.pay-option input{accent-color:var(--orange); width:17px; height:17px;}
+
+/* ---------- mobile responsive ---------- */
+@media (max-width:480px){
+  .address-box{padding:12px 14px;}
+  .pay-option{padding:12px 14px;}
+}

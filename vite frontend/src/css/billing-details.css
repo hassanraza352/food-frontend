@@ -1,0 +1,11 @@
+.panel-top h1{font-size:1.05rem;}
+.receipt-head{font-size:0.88rem;}
+.receipt-items{display:flex; flex-direction:column; gap:10px; margin-top:10px; margin-bottom:6px;}
+.receipt-item{display:flex; justify-content:space-between; font-size:0.9rem;}
+.receipt-item .price{font-size:0.9rem;}
+
+/* ---------- mobile responsive ---------- */
+@media (max-width:480px){
+  .receipt-head{font-size:0.82rem;}
+  .receipt-item{font-size:0.84rem;}
+}

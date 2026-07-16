@@ -1,0 +1,33 @@
+.food-list{display:flex; flex-direction:column; gap:14px;}
+.food-row{
+  display:flex; align-items:center; gap:18px; padding:14px 22px;
+}
+.food-thumb{
+  width:58px; height:58px; min-width:58px; border-radius:14px; display:grid; place-items:center; font-size:1.7rem;
+}
+.grad-1{background:linear-gradient(135deg,#FFD3B0,#FF8A4C);}
+.grad-2{background:linear-gradient(135deg,#FFE1A8,#FFB121);}
+.grad-3{background:linear-gradient(135deg,#E8C39E,#A9652E);}
+.grad-4{background:linear-gradient(135deg,#BEE8D6,#22B573);}
+.grad-5{background:linear-gradient(135deg,#B9E0FF,#4C9AFF);}
+.food-meta{flex:1; min-width:0;}
+.food-meta h3{font-size:1rem; margin-bottom:3px;}
+.food-meta p{font-size:0.82rem;}
+.food-price{margin-right:6px;}
+.food-price .price{font-size:1rem; color:var(--ink);}
+.add-btn{padding:10px 20px;}
+
+/* ---------- mobile responsive ---------- */
+@media (max-width:560px){
+  .food-row{padding:12px 14px; gap:12px;}
+  .food-thumb{width:48px; height:48px; min-width:48px; font-size:1.4rem; border-radius:12px;}
+  .food-meta h3{font-size:0.92rem;}
+  .food-price{margin-right:0;}
+  .food-price .price{font-size:0.88rem;}
+  .add-btn{padding:8px 14px; font-size:0.76rem;}
+}
+@media (max-width:400px){
+  .food-row{flex-wrap:wrap;}
+  .food-price{order:3; margin-left:66px;}
+  .add-btn{order:4; margin-left:auto;}
+}

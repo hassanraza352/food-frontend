@@ -1,0 +1,97 @@
+body{background:var(--cream);}
+.admin-main{background:var(--cream);}
+.admin-topbar{
+  display:flex; align-items:center; justify-content:space-between; padding:20px 32px;
+  background:#fff; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:40;
+}
+.admin-topbar h1{font-size:1.25rem;}
+
+/* stat cards */
+.stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:6px;}
+.stat-card{display:flex; align-items:center; gap:14px; padding:20px;}
+.stat-icon{
+  width:48px; height:48px; min-width:48px; border-radius:14px; display:grid; place-items:center; font-size:1.3rem;
+}
+.icon-orange{background:linear-gradient(135deg,#FFDFCB,#FFC29B);}
+.icon-green{background:linear-gradient(135deg,#C9F1DD,#8FE0B8);}
+.icon-purple{background:linear-gradient(135deg,#FFE9B8,#FFC96B);}
+.icon-blue{background:linear-gradient(135deg,#CFE6FF,#A0CBFF);}
+.stat-card p{font-size:0.78rem; margin-bottom:4px;}
+.stat-card h2{font-size:1.3rem;}
+
+/* table */
+.table-card{background:#fff; border-radius:var(--radius); border:1px solid var(--line); overflow:hidden; margin-bottom:20px;}
+table{width:100%; border-collapse:collapse;}
+thead{background:var(--cream);}
+th{text-align:left; font-size:0.76rem; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); padding:14px 20px;}
+td{padding:16px 20px; font-size:0.88rem; border-top:1px solid var(--line);}
+tbody tr{transition:background .15s ease;}
+tbody tr:hover{background:var(--cream);}
+
+/* forms (add food) */
+.form-card{background:#fff; border-radius:var(--radius-lg); border:1px solid var(--line); padding:32px; max-width:640px; box-shadow:var(--shadow-sm);}
+.form-grid{display:grid; grid-template-columns:1fr 1fr; gap:0 20px;}
+.upload-box{
+  display:flex; align-items:center; gap:16px; background:var(--cream); border:1.5px dashed var(--line); border-radius:14px; padding:16px;
+}
+.upload-preview{width:64px; height:64px; border-radius:12px; background:linear-gradient(135deg,#FFD3B0,#FF8A4C); display:grid; place-items:center; font-size:1.6rem;}
+
+/* order status filters bar */
+.filters-bar{display:flex; gap:12px; align-items:center;}
+.filters-bar select{padding:10px 14px; border-radius:10px; border:1.5px solid var(--line); background:#fff; color:var(--ink-soft); font-size:0.85rem;}
+
+.action-link{color:var(--brown-dark); font-weight:700; font-size:0.82rem;}
+
+/* ---------- mobile responsive ---------- */
+@media (max-width:900px){
+  .stat-grid{grid-template-columns:repeat(2,1fr);}
+  .admin-topbar{padding:16px 18px;}
+  .admin-topbar h1{font-size:1.05rem;}
+}
+@media (max-width:560px){
+  .stat-grid{grid-template-columns:1fr; gap:12px;}
+  .stat-card{padding:16px;}
+  .form-grid{grid-template-columns:1fr; gap:0;}
+  .form-card{padding:22px 18px; border-radius:18px;}
+  .upload-box{flex-direction:column; align-items:flex-start; text-align:left;}
+  .filters-bar{flex-wrap:wrap; width:100%;}
+  .filters-bar select{flex:1; min-width:130px;}
+  .section-head{flex-wrap:wrap; gap:10px;}
+}
+/* scrollable table so columns never get crushed on small screens */
+.table-card{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+@media (max-width:700px){
+  table{min-width:640px;}
+}
+
+/* ---------- manage foods: image thumb, actions, empty state ---------- */
+.food-thumb-sm{
+  width:44px; height:44px; border-radius:10px; overflow:hidden;
+  display:grid; place-items:center; font-size:1.15rem;
+}
+.food-thumb-sm.grad-1{background:linear-gradient(135deg,#FFD3B0,#FF8A4C);}
+.food-thumb-sm.grad-2{background:linear-gradient(135deg,#FFE1A8,#FFB121);}
+.food-thumb-sm.grad-3{background:linear-gradient(135deg,#E8C39E,#A9652E);}
+.food-thumb-sm.grad-4{background:linear-gradient(135deg,#BEE8D6,#22B573);}
+.food-thumb-sm.grad-5{background:linear-gradient(135deg,#B9E0FF,#4C9AFF);}
+.food-thumb-sm img{width:100%; height:100%; object-fit:cover;}
+
+.desc-cell{max-width:240px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.action-cell{display:flex; gap:14px;}
+.del-link{color:var(--red);}
+
+.empty-state{
+  background:#fff; border:1.5px dashed var(--line); border-radius:var(--radius-lg);
+  padding:50px 24px; text-align:center;
+}
+.empty-icon{font-size:2.6rem; display:block; margin-bottom:10px;}
+.empty-state h3{font-size:1.05rem; margin-bottom:6px;}
+
+/* ---------- mobile responsive: manage foods ---------- */
+@media (max-width:560px){
+  .food-thumb-sm{width:36px; height:36px; font-size:1rem;}
+  .desc-cell{max-width:120px;}
+  .action-cell{flex-direction:column; gap:6px;}
+  .empty-state{padding:34px 18px;}
+  .empty-icon{font-size:2.1rem;}
+}

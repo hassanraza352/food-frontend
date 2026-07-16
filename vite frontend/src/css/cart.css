@@ -1,0 +1,48 @@
+.details-shell{align-items:flex-start; padding-top:40px;}
+.panel-card{
+  width:100%; max-width:440px; background:#fff; border-radius:var(--radius-lg);
+  box-shadow:var(--shadow); overflow:hidden;
+}
+.panel-top{
+  display:flex; align-items:center; justify-content:space-between; padding:20px 22px;
+  border-bottom:1px solid var(--line);
+}
+.panel-top h1{font-size:1.15rem;}
+.panel-body{padding:20px 22px 26px; display:flex; flex-direction:column; gap:14px;}
+
+.cart-item{display:flex; align-items:center; gap:14px; padding:14px;}
+.food-thumb{width:52px; height:52px; min-width:52px; border-radius:12px; display:grid; place-items:center; font-size:1.5rem;}
+.grad-1{background:linear-gradient(135deg,#FFD3B0,#FF8A4C);}
+.grad-2{background:linear-gradient(135deg,#FFE1A8,#FFB121);}
+.grad-5{background:linear-gradient(135deg,#B9E0FF,#4C9AFF);}
+.food-meta{flex:1; min-width:0;}
+.food-meta h3{font-size:0.94rem; margin-bottom:2px;}
+.food-meta p{font-size:0.76rem; margin-bottom:3px;}
+.food-meta .price{font-size:0.86rem; color:var(--orange-dark);}
+
+.qty-row{display:inline-flex; align-items:center; gap:10px; background:var(--cream); padding:6px 10px; border-radius:999px;}
+.qty-btn{width:24px; height:24px; border-radius:50%; background:#fff; display:grid; place-items:center; font-weight:700; font-size:0.85rem; box-shadow:var(--shadow-sm);}
+.qty-val{font-family:var(--font-mono); font-weight:700; font-size:0.85rem;}
+.del-btn{color:var(--red); font-size:1rem; opacity:0.7; transition:opacity .2s ease;}
+.del-btn:hover{opacity:1;}
+
+.summary-box{background:var(--cream); border-radius:14px; padding:16px 18px; margin-top:6px;}
+.summary-row{display:flex; justify-content:space-between; padding:6px 0; font-size:0.9rem;}
+.summary-row.total{font-weight:800; font-size:1.05rem;}
+.summary-row.total .price{color:var(--orange-dark); font-size:1.1rem;}
+
+/* ---------- mobile responsive ---------- */
+@media (max-width:520px){
+  .panel-card{border-radius:20px;}
+  .panel-top{padding:16px 18px;}
+  .panel-body{padding:16px 18px 22px; gap:12px;}
+  .cart-item{padding:12px; gap:10px;}
+  .food-thumb{width:44px; height:44px; min-width:44px; font-size:1.25rem;}
+  .food-meta h3{font-size:0.86rem;}
+  .qty-row{gap:8px; padding:5px 8px;}
+  .summary-box{padding:14px;}
+}
+@media (max-width:380px){
+  .cart-item{flex-wrap:wrap;}
+  .qty-row{margin-left:66px;}
+}
