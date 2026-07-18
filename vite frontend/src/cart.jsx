@@ -1,11 +1,118 @@
 
-{/* <link rel="stylesheet" to="css/common.css">
-<link rel="stylesheet" to="css/cart.css"> */}
 import "./css/common.css"
 import "./css/cart.css"
 import { Link } from "react-router-dom";
+import { useEffect, useState} from "react";
+import axios from "axios";
+
 
 function Cart(){
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/cart", {
+        withCredentials: true
+    })
+    .then((response) => {
+
+        console.log(response.data);
+
+        setCartItems(response.data.cart);
+
+    })
+    .catch((error) => {
+
+        console.log(error);
+
+    });
+
+}, []);
+
+const removeItem = (id) => {
+axios.delete(
+    `http://localhost:3000/api/cart/${id}`,
+    {
+        withCredentials: true
+    }
+)
+.then(() => {
+setCartItems(
+    cartItems.filter(item => item._id !== id)
+);
+})
+.catch((error) => {
+
+    console.log(error);
+
+});
+};
+
+const subtotal = cartItems.reduce((total, item) => {
+    return total + (item.food.price * item.quantity);
+}, 0);
+const increaseQuantity = (item) => {
+
+    axios.put(
+        `http://localhost:3000/api/cart/${item._id}`,
+        {
+            quantity: item.quantity + 1
+        },
+        {
+            withCredentials: true
+        }
+    )
+    .then(() => {
+
+        setCartItems(
+            cartItems.map(cartItem =>
+                cartItem._id === item._id
+                    ? {
+                        ...cartItem,
+                        quantity: cartItem.quantity + 1
+                    }
+                    : cartItem
+            )
+        );
+
+    })
+    .catch(error => console.log(error));
+
+};
+
+const decreaseQuantity = (item) => {
+
+    if (item.quantity === 1) return;
+
+    axios.put(
+        `http://localhost:3000/api/cart/${item._id}`,
+        {
+            quantity: item.quantity - 1
+        },
+        {
+            withCredentials: true
+        }
+    )
+    .then(() => {
+
+        setCartItems(
+            cartItems.map(cartItem =>
+                cartItem._id === item._id
+                    ? {
+                        ...cartItem,
+                        quantity: cartItem.quantity - 1
+                    }
+                    : cartItem
+            )
+        );
+
+    })
+    .catch(error => console.log(error));
+
+};
+
+const deliveryFee = 100;
+
+const total = subtotal + deliveryFee;
   return(
 <div className="center-shell details-shell">
   <div className="panel-card rise">
@@ -16,56 +123,33 @@ function Cart(){
     </div>
 
     <div className="panel-body">
-      <div className="cart-item ticket">
-        <div className="food-thumb grad-1">🍕</div>
+      {cartItems.map((item) => (
+        <div className="cart-item ticket" key={item._id}>
+          <div className="food-thumb grad-1">🍕</div>
         <div className="food-meta">
-          <h3>Cheese Pizza</h3>
-          <p className="muted">Large</p>
-          <span className="price">Rs. 1200</span>
+          <h3>{item.food.foodName}</h3>
+          <p className="muted">{item.food.category}</p>
+          <span className="price">Rs. {item.food.price}</span>
         </div>
         <div className="qty-row">
-          <span className="qty-btn">−</span>
-          <span className="qty-val">1</span>
-          <span className="qty-btn">+</span>
+          <button className="qty-btn" onClick={() => decreaseQuantity(item)}
+>-</button>
+          <span className="qty-val">{item.quantity}</span>
+          <button className="qty-btn" onClick={() => increaseQuantity(item)}>+</button>
         </div>
-        <span className="del-btn">🗑️</span>
-      </div>
-
-      <div className="cart-item ticket">
-        <div className="food-thumb grad-2">🍔</div>
-        <div className="food-meta">
-          <h3>Zinger Burger</h3>
-          <p className="muted">Regular</p>
-          <span className="price">Rs. 650</span>
-        </div>
-        <div className="qty-row">
-          <span className="qty-btn">−</span>
-          <span className="qty-val">1</span>
-          <span className="qty-btn">+</span>
-        </div>
-        <span className="del-btn">🗑️</span>
-      </div>
-
-      <div className="cart-item ticket">
-        <div className="food-thumb grad-5">🥤</div>
-        <div className="food-meta">
-          <h3>Coke (1.5L)</h3>
-          <p className="muted">Regular</p>
-          <span className="price">Rs. 250</span>
-        </div>
-        <div className="qty-row">
-          <span className="qty-btn">−</span>
-          <span className="qty-val">1</span>
-          <span className="qty-btn">+</span>
-        </div>
-        <span className="del-btn">🗑️</span>
-      </div>
+<button
+    className="del-btn"
+    onClick={() => removeItem(item._id)}
+>
+    🗑️
+</button>      </div>
+      ))}
 
       <div className="summary-box">
-        <div className="summary-row"><span className="muted">Subtotal</span><span className="price">Rs. 2100</span></div>
-        <div className="summary-row"><span className="muted">Delivery Fee</span><span className="price">Rs. 100</span></div>
+        <div className="summary-row"><span className="muted">Subtotal</span><span className="price">{subtotal}</span></div>
+        <div className="summary-row"><span className="muted">Delivery Fee</span><span className="price">Rs {deliveryFee}</span></div>
         <hr className="divider"/>
-        <div className="summary-row total"><span>Total</span><span className="price">Rs. 2200</span></div>
+        <div className="summary-row total"><span>Total</span><span className="price">{total}</span></div>
       </div>
 
       <Link to="/user/checkout" className="btn btn-primary btn-block btn-cta">Proceed to Checkout</Link>

@@ -208,6 +208,12 @@ h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); line-height:1.2;}
   flex:1; max-width:420px; display:flex; align-items:center; gap:10px;
   background:var(--cream); border:1.5px solid var(--line); border-radius:999px;
   padding:11px 18px; color:var(--muted);
+  
+}
+.search-box input{
+    border: none;
+  outline: none;
+  color: #e26bb2;
 }
 .topbar-icons{display:flex; align-items:center; gap:16px;}
 .icon-btn{

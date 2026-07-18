@@ -2,8 +2,35 @@ import "./css/common.css"
 import "./css/home.css"
 import { Link } from "react-router-dom";
 
+//   {
+//     id: 1,
+//     name: "Pizza Palace",
+//     rating: 4.5,
+//     time: "30-40 min",
+//      category: "Pizza",
+//   },
+//   {
+//     id: 2,
+//     name: "Burger King",
+//     rating: 4.3,
+//     time: "20-30 min",
+//      category: "Burger",
+
+//   }
+// ];
+
 
 function Home(){
+
+
+//         food.name.toLowerCase().includes(search.toLowerCase());
+
+//     const matchCategory =
+//         selectedCategory === "All" ||
+//         food.category === selectedCategory;
+
+//     return matchSearch && matchCategory;
+// });
   return(
 <div className="layout-with-side">
   {/* <!-- SIDE NAV --> */}
@@ -27,8 +54,7 @@ function Home(){
       <div className="location">
         <span>📍 Deliver to</span>
         <strong>Model Town, Lahore ▾</strong>
-      </div>
-      <div className="search-box">🔍 <span>Search for food, restaurants...</span></div>
+    </div>
       <div className="topbar-icons">
         <Link to="/user/cart" className="icon-btn">🛒 <span className="dot">2</span></Link>
         <Link to="#" className="icon-btn">🔔 <span className="dot">1</span></Link>
@@ -56,57 +82,58 @@ function Home(){
         </div>
       </section>
 
-      <div className="section-head rise rise-1">
-        <h2>Categories</h2>
-        <Link to="/user/food-listing">View all</Link>
-      </div>
-      <div className="cat-row">
-        <Link to="/user/food-listing" className="cat-pill active rise rise-1"><span className="cat-icon">🍽️</span>All</Link>
-        <Link to="/user/food-listing" className="cat-pill rise rise-2"><span className="cat-icon">🍕</span>Pizza</Link>
-        <Link to="/user/food-listing" className="cat-pill rise rise-3"><span className="cat-icon">🍔</span>Burger</Link>
-        <Link to="/user/food-listing" className="cat-pill rise rise-4"><span className="cat-icon">🥪</span>Sandwich</Link>
-        <Link to="/user/food-listing" className="cat-pill rise rise-5"><span className="cat-icon">🥤</span>Drinks</Link>
-        <Link to="/user/food-listing" className="cat-pill rise rise-6"><span className="cat-icon">🍰</span>Dessert</Link>
-      </div>
+      <section className="category-banner">
+  <div className="category-content">
+    <span className="tag">🍽️ Explore Our Menu</span>
 
-      <div className="section-head rise rise-2">
+    <h2>We Have Something crazy for Everyone</h2>
+
+    <p>
+      From cheesy pizzas and juicy burgers to refreshing drinks and delicious
+      desserts, discover your favorite meal in just one click.
+    </p>
+
+    <Link to="/user/food-listing" className="category-btn">
+      Explore Categories →
+    </Link>
+  </div>
+
+  <div className="category-image">
+    <img
+      src="/images/category-banner.png"
+      alt="Food Categories"
+    />
+  </div>
+</section>
+
+      {/* <div className="section-head rise rise-2">
         <h2>Popular Restaurants</h2>
         <Link to="/user/food-listing">View all</Link>
-      </div>
-      <div className="resto-grid">
-        <Link to="/user/food-listing" className="resto-card lift rise rise-1">
+      </div> */}
+    {/* <div className="resto-grid"> */}
+        {/* <Link to="/user/food-listing" className="resto-card lift rise rise-1">
           <div className="resto-img grad-1">🍕</div>
           <div className="resto-info">
             <h3>Pizza Palace</h3>
             <p className="muted">⭐ 4.5 · 30-40 min</p>
             <span className="badge badge-green">Free Delivery</span>
           </div>
-        </Link>
-        <Link to="/user/food-listing" className="resto-card lift rise rise-2">
-          <div className="resto-img grad-2">🍗</div>
+        </Link> */}
+        {/* {filteredFoods.map(restaurant => (
+          <Link to="/user/food-listing" className="resto-card lift rise rise-1"
+           key={restaurant.id}
+           >
+          <div className="resto-img grad-1">img</div>
           <div className="resto-info">
-            <h3>Burger King</h3>
-            <p className="muted">⭐ 4.3 · 20-30 min</p>
+            <h3>{restaurant.name}</h3>
+            <p className="muted">⭐ {restaurant.rating} · {restaurant.time}</p>
             <span className="badge badge-green">Free Delivery</span>
           </div>
         </Link>
-        <Link to="/user/food-listing" className="resto-card lift rise rise-3">
-          <div className="resto-img grad-3">🍟</div>
-          <div className="resto-info">
-            <h3>Foodies Hub</h3>
-            <p className="muted">⭐ 4.6 · 30-40 min</p>
-            <span className="badge badge-green">Free Delivery</span>
-          </div>
-        </Link>
-        <Link to="/user/food-listing" className="resto-card lift rise rise-4">
-          <div className="resto-img grad-4">🥤</div>
-          <div className="resto-info">
-            <h3>Tasty Bites</h3>
-            <p className="muted">⭐ 4.4 · 25-35 min</p>
-            <span className="badge badge-green">Free Delivery</span>
-          </div>
-        </Link>
-      </div>
+        ))} */}
+        
+    
+      {/* </div> */}
     </main>
   </div>
 </div>

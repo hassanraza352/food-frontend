@@ -1,7 +1,54 @@
 import { Link } from "react-router-dom";
 import "./css/common.css"
 import "./css/admin.css"
+
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+
+
 function Admin_add_food(){
+const navigate = useNavigate();
+
+const [foodName, setFoodName] = useState("");
+const [category, setCategory] = useState("Pizza");
+const [price, setPrice] = useState("");
+const [description, setDescription] = useState("");
+//const [image, setImage] = useState("");
+const [available, setAvailable] = useState(true);
+
+
+  const addFood = async (e) => {
+  e.preventDefault();
+
+  try {
+
+    const response = await axios.post(
+      "http://localhost:3000/api/foods",
+      {
+        foodName,
+        category,
+        price,
+        description,
+        available
+      }
+    );
+
+    console.log(response.data);
+
+    alert("Food Added Successfully");
+
+    navigate("/admin/manage-food");
+
+  } catch (error) {
+
+    console.log(error);
+
+    alert("Failed to add food");
+
+  }
+};
 return(
 <div className="layout-with-side">
   <aside className="sidenav">
@@ -24,32 +71,43 @@ return(
     </header>
 
     <main className="app-shell">
-      <form className="form-card rise" >
+      <form className="form-card rise" onSubmit={addFood} >
         <div className="field">
           <label htmlFor="fname">Food Name</label>
-          <input type="text" id="fname" placeholder="e.g. Cheese Pizza"/>
-        </div>
+          <input
+             type="text"
+             id="foodName"
+             placeholder="e.g. Cheese Pizza, burger"
+             value={foodName}
+             onChange={(e) => setFoodName(e.target.value)}
+          />        </div>
 
         <div className="form-grid">
           <div className="field">
             <label htmlFor="cat">Category</label>
-            <select id="cat">
-              <option>Pizza</option>
-              <option>Burger</option>
-              <option>Sandwich</option>
-              <option>Drinks</option>
-              <option>Dessert</option>
-            </select>
+        <select
+  id="cat"
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+>
+  <option>Pizza</option>
+  <option>Burger</option>
+  <option>Sandwich</option>
+  <option>Drinks</option>
+  <option>Dessert</option>
+</select>
           </div>
           <div className="field">
             <label htmlFor="price">Price (Rs.)</label>
-            <input type="number" id="price" placeholder="e.g. 1200"/>
+            <input type="number" id="price" placeholder="e.g. 1200" value={price}
+  onChange={(e) => setPrice(e.target.value)}/>
           </div>
         </div>
 
         <div className="field">
           <label htmlFor="desc">Description</label>
-          <textarea id="desc" rows="4" placeholder="Enter food description"></textarea>
+          <textarea id="desc" rows="4" placeholder="Enter food description" value={description}
+  onChange={(e) => setDescription(e.target.value)}></textarea>
         </div>
 
         <div className="field">
@@ -63,7 +121,12 @@ return(
           </div>
         </div>
 
-        <Link to="/admin/dashboard" className="btn btn-primary btn-block btn-cta mt-24">Save Food</Link>
+<button
+  type="submit"
+  className="btn btn-primary btn-block btn-cta mt-24"
+>
+  Save Food
+</button>
       </form>
     </main>
   </div>

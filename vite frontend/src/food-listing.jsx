@@ -1,11 +1,48 @@
-
-{/* <link rel="stylesheet" tof="css/common.css">
-<link rel="stylesheet" tof="css/food-listing.css"> */}
 import "./css/common.css"
 import "./css/food-listing.css"
+import "./css/home.css"
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 
 function Food_listing(){
+const [foods, setFoods] = useState([]); 
+const [search, setSearch] = useState("");
+ const [selectedCategory, setSelectedCategory] = useState("All");
+ const [sortOrder, setSortOrder] = useState("");
+ useEffect(() => {
+     axios.get("http://localhost:3000/api/foods")
+        .then((response) => {
+           setFoods(response.data.foods);
+        })
+        .catch((error) => {
+
+            console.log(error);
+
+        });
+}, []);
+
+ const filteredFoods = foods.filter((food) => {
+  const matchSearch =
+      food.foodName.toLowerCase().includes(search.toLowerCase());
+
+  const matchCategory =
+      selectedCategory === "All" ||
+      food.category === selectedCategory;
+
+  return matchSearch && matchCategory;
+});
+
+const sortedFoods = [...filteredFoods];
+
+if (sortOrder === "lowToHigh") {
+  sortedFoods.sort((a, b) => a.price - b.price);
+}
+
+if (sortOrder === "highToLow") {
+  sortedFoods.sort((a, b) => b.price - a.price);
+}
   return(
 <div className="layout-with-side">
   <aside className="sidenav">
@@ -17,80 +54,76 @@ function Food_listing(){
       <Link to="#">❤️ Favorites</Link>
       <Link to="#">👤 Profile</Link>
     </nav>
-    <div className="nav-foot"><Link tof="/">🚪 Logout</Link></div>
+    <div className="nav-foot"><Link to="/">🚪 Logout</Link></div>
   </aside>
 
   <div className="layout-main">
     <header className="topbar">
       <Link to="/user/home" className="icon-btn">←</Link>
-      <div className="search-box">🔍 <span>Search for food, restaurants...</span></div>
+       <div className="search-box">🔍 
+        <input className="search-input"
+    type="text"
+    placeholder="Search fast foods..."
+    value={search}
+    onChange={(e) => setSearch(e.target.value)}
+  />
+      </div>
       <div className="topbar-icons">
-        <Link to="/user/cart" className="icon-btn">🛒 <span className="dot">2</span></Link>
+        <Link to="/user/cart" className="icon-btn">🛒 <span className="dot">{foods.length}</span></Link>
         <Link to="#" className="avatar">A</Link>
       </div>
     </header>
 
     <main className="app-shell">
       <div className="section-head rise">
-        <h2>All Foods</h2>
+        <h2>All  availabe Foods</h2>
         <div className="flex gap-12">
-          <button className="btn btn-outline btn-sm">⇅ Sort</button>
-          <button className="btn btn-outline btn-sm">▤ Filter</button>
-        </div>
+<select
+  className="btn btn-outline btn-sm"
+  value={sortOrder}
+  onChange={(e) => setSortOrder(e.target.value)}
+>
+  <option value="">Sort By</option>
+  <option value="lowToHigh">Price: Low → High</option>
+  <option value="highToLow">Price: High → Low</option>
+</select>      
+  </div>
       </div>
+      <div className="section-head rise rise-1">
+        <h2>Categories</h2>
+
+      </div>
+      <div className="cat-row">
+        <Link  className="cat-pill active rise rise-1" onClick={() => setSelectedCategory("All")}><span className="cat-icon">🍽️</span>All</Link>
+        <Link  className="cat-pill rise rise-2"onClick={() => setSelectedCategory("Pizza")}><span className="cat-icon" >🍕</span>Pizza</Link>
+        <Link  className="cat-pill rise rise-3"onClick={() => setSelectedCategory("Burger")}><span className="cat-icon">🍔</span>Burger</Link>
+        <Link  className="cat-pill rise rise-4"onClick={() => setSelectedCategory("Sandwich")}><span className="cat-icon">🥪</span>Sandwich</Link>
+        <Link  className="cat-pill rise rise-5"onClick={() => setSelectedCategory("Drinks")}><span className="cat-icon">🥤</span>Drinks</Link>
+        <Link  className="cat-pill rise rise-6"onClick={() => setSelectedCategory("Dessert")}><span className="cat-icon">🍰</span>Dessert</Link>
+      </div> 
 
       <div className="food-list">
-        <Link to="/user/food-details" className="food-row ticket lift rise rise-1">
+        {
+          sortedFoods.map((food) => (
+ <Link to={`/user/food-details/${food._id}`} className="food-row ticket lift rise rise-1"
+     key={food._id}
+ >
           <div className="food-thumb grad-1">🍕</div>
           <div className="food-meta">
-            <h3>Cheese Pizza</h3>
-            <p className="muted">Pizza Palace</p>
+            <h3>{food.foodName}</h3>
+            <p className="muted">{food.category}</p>
           </div>
           <div className="food-price">
-            <span className="price">Rs. 1200</span>
+            <span className="price">RS.{food.price}</span>
           </div>
           <span className="btn btn-primary btn-sm add-btn">+ Add</span>
         </Link>
+          ))
+        }
+       
 
-        <Link to="/user/food-details" className="food-row ticket lift rise rise-2">
-          <div className="food-thumb grad-2">🍔</div>
-          <div className="food-meta">
-            <h3>Zinger Burger</h3>
-            <p className="muted">Burger King</p>
-          </div>
-          <div className="food-price"><span className="price">Rs. 650</span></div>
-          <span className="btn btn-primary btn-sm add-btn">+ Add</span>
-        </Link>
 
-        <Link to="/user/food-details" className="food-row ticket lift rise rise-3">
-          <div className="food-thumb grad-3">🥪</div>
-          <div className="food-meta">
-            <h3>Chicken Sandwich</h3>
-            <p className="muted">Foodies Hub</p>
-          </div>
-          <div className="food-price"><span className="price">Rs. 550</span></div>
-          <span className="btn btn-primary btn-sm add-btn">+ Add</span>
-        </Link>
-
-        <Link to="/user/food-details" className="food-row ticket lift rise rise-4">
-          <div className="food-thumb grad-4">🍟</div>
-          <div className="food-meta">
-            <h3>French Fries</h3>
-            <p className="muted">Tasty Bites</p>
-          </div>
-          <div className="food-price"><span className="price">Rs. 320</span></div>
-          <span className="btn btn-primary btn-sm add-btn">+ Add</span>
-        </Link>
-
-        <Link to="/user/food-details" className="food-row ticket lift rise rise-5">
-          <div className="food-thumb grad-5">🥤</div>
-          <div className="food-meta">
-            <h3>Coke (1.5L)</h3>
-            <p className="muted">Drinks Point</p>
-          </div>
-          <div className="food-price"><span className="price">Rs. 250</span></div>
-          <span className="btn btn-primary btn-sm add-btn">+ Add</span>
-        </Link>
+   
       </div>
     </main>
   </div>

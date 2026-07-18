@@ -2,11 +2,63 @@
 import "./css/common.css"
 import "./css/admin.css"
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 
 
 
 function Admin_manage_orders(){
- 
+  const [statusFilter, setStatusFilter] = useState("All");
+ const [orders, setOrders] = useState([]);
+ const getOrders = async () => {
+  try {
+    const response = await axios.get("http://localhost:3000/api/orders");
+
+    setOrders(response.data.orders);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+  useEffect(() => {
+  getOrders();
+}, []);
+
+
+const changeStatus = async (orderId, newStatus) => {
+
+  try {
+
+    await axios.put(
+      `http://localhost:3000/api/orders/${orderId}`,
+      {
+        status: newStatus
+      }
+    );
+
+    setOrders(
+      orders.map(order =>
+        order._id === orderId
+          ? { ...order, status: newStatus }
+          : order
+      )
+    );
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
+const filterOrders = () => {
+  return orders.filter((order) => {
+    return statusFilter === "All" || order.status === statusFilter;
+  });
+};
+  const filteredOrders = filterOrders();
  
   return(
 <div className="layout-with-side">
@@ -33,8 +85,14 @@ function Admin_manage_orders(){
       <div className="section-head" style={{ marginTop: "0" }}>
         <h2>All Orders</h2>
         <div className="filters-bar">
-          <select><option>All Status</option><option>Confirmed</option><option>Preparing</option><option>Out for Delivery</option><option>Delivered</option><option>Cancelled</option></select>
-          <select><option>Date</option><option>Today</option><option>This Week</option><option>This Month</option></select>
+          <select value={statusFilter}
+  onChange={(e) => setStatusFilter(e.target.value)}>
+    <option value="All" >All Status</option>
+    <option value="Confirmed" >Confirmed</option>
+    <option value="Preparing" >Preparing</option>
+    <option value="Out for Delivery" >Out for Delivery</option>
+    <option value="Delivered" >Delivered</option>
+    <option value="Cancelled" >Cancelled</option></select>
         </div>
       </div>
 
@@ -44,31 +102,42 @@ function Admin_manage_orders(){
             <tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Amount</th><th>Status</th><th>Action</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="mono">#ORD12345</td><td>Ahmad Ali</td><td className="muted">3 items</td><td className="price">Rs. 2200</td>
-              <td><span className="badge badge-orange">Out for Delivery</span></td>
-              <td><Link to="/user/billing-details" className="action-link">View</Link></td>
-            </tr>
-            <tr>
-              <td className="mono">#ORD12344</td><td>Hassan Raza</td><td className="muted">2 items</td><td className="price">Rs. 1800</td>
-              <td><span className="badge badge-yellow">Preparing</span></td>
-              <td><Link to="/user/billing-details" className="action-link">View</Link></td>
-            </tr>
-            <tr>
-              <td className="mono">#ORD12343</td><td>Usman Khan</td><td className="muted">1 item</td><td className="price">Rs. 950</td>
-              <td><span className="badge badge-purple">Confirmed</span></td>
-              <td><Link to="/user/billing-details.html" className="action-link">View</Link></td>
-            </tr>
-            <tr>
-              <td className="mono">#ORD12342</td><td>Ali Hamza</td><td className="muted">2 items</td><td className="price">Rs. 1500</td>
-              <td><span className="badge badge-green">Delivered</span></td>
-              <td><Link to="/user/billing-details.html" className="action-link">View</Link></td>
-            </tr>
-            <tr>
-              <td className="mono">#ORD12341</td><td>Zain Ul Abdin</td><td className="muted">1 item</td><td className="price">Rs. 1200</td>
-              <td><span className="badge badge-red">Cancelled</span></td>
-              <td><Link to="/user/billing-details.html" className="action-link">View</Link></td>
-            </tr>
+            {
+              filteredOrders.map((order) => (
+                <tr key={order._id}>
+                  <td className="mono"># {order._id}</td>
+                  <td>{order.customer?.name}</td>
+                  <td className="muted">{order.items.length} items</td>
+                  <td className="price">Rs. {order.totalAmount}</td>  
+                  <td>
+
+  <select
+    value={order.status}
+    onChange={(e) =>
+      changeStatus(order._id, e.target.value)
+    }
+    className="badge badge-orange"
+  >
+
+    <option value="Pending">Pending</option>
+    <option value="Confirmed">Confirmed</option>
+    <option value="Preparing">Preparing</option>
+    <option value="Out for Delivery">
+      Out for Delivery
+    </option>
+    <option value="Delivered">Delivered</option>
+    <option value="Cancelled">Cancelled</option>
+
+  </select>
+
+</td>
+                  <td>
+                    <Link to={`/admin/order-tracking/${order._id}`} className="action-link">View</Link>
+                  </td>
+                </tr>
+              ))
+            }
+            
           </tbody>
         </table>
       </div>

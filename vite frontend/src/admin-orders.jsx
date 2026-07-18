@@ -7,34 +7,9 @@ import "./css/common.css"
 import "./css/cart.css"
 import "./css/my-orders.css"
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 
 function My_orders(){
-  const [orders, setOrders] = useState([]);
-  useEffect(() => {
-
-    axios.get(
-        "http://localhost:3000/api/my-orders",
-        {
-            withCredentials: true
-        }
-    )
-    .then((response) => {
-
-        console.log(response.data);
-
-        setOrders(response.data.orders);
-
-    })
-    .catch((error) => {
-
-        console.log(error);
-
-    });
-
-}, []);
   return(
 <div className="layout-with-side">
   <aside className="sidenav">
@@ -61,18 +36,41 @@ function My_orders(){
       </div>
 
       <div className="orders-list">
-        {
-          orders.map((order) => (
-            <Link key={order._id} to={`/user/order-tracking/${order._id}`} className="order-row ticket lift rise rise-1">
-            <div>
-            <h3>Order #{order._id}</h3>
-            <p className="muted">{order.createdAt.split("T")[0]}</p>
+        <Link to="/user/billing-details" className="order-row ticket lift rise rise-1">
+          <div>
+            <h3>Order #ORD12345</h3>
+            <p className="muted">20 May, 2024</p>
           </div>
-          <span className="price">Rs. {order.totalAmount}</span>
-          <span className="badge badge-orange">{order.status}</span>
+          <span className="price">Rs. 2200</span>
+          <span className="badge badge-orange">Out for Delivery</span>
         </Link>
-          ))
-        }
+
+        <Link to="/user/billing-details" className="order-row ticket lift rise rise-2">
+          <div>
+            <h3>Order #ORD12300</h3>
+            <p className="muted">20 May, 2024</p>
+          </div>
+          <span className="price">Rs. 1800</span>
+          <span className="badge badge-green">Delivered</span>
+        </Link>
+
+        <Link to="/user/billing-details" className="order-row ticket lift rise rise-3">
+          <div>
+            <h3>Order #ORD12250</h3>
+            <p className="muted">15 May, 2024</p>
+          </div>
+          <span className="price">Rs. 950</span>
+          <span className="badge badge-green">Delivered</span>
+        </Link>
+
+        <Link to="/user/billing-details" className="order-row ticket lift rise rise-4">
+          <div>
+            <h3>Order #ORD12200</h3>
+            <p className="muted">10 May, 2024</p>
+          </div>
+          <span className="price">Rs. 1200</span>
+          <span className="badge badge-red">Cancelled</span>
+        </Link>
       </div>
     </main>
   </div>

@@ -107,7 +107,7 @@ const currentStep = steps.indexOf(order.status);
 
 </ul>
 
-      <Link to="/user/my-orders" className="btn btn-outline btn-block">View Order Details</Link>
+      <Link to="/user/my-orders" className="btn btn-outline btn-block">View hassadn Details</Link>
     </div>
   </div>
 </div>

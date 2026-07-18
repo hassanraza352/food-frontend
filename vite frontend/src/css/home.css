@@ -14,6 +14,146 @@
   content:""; position:absolute; inset:0;
   background:radial-gradient(circle at 12% 110%, rgba(90,40,0,0.45), transparent 55%);
 }
+.category-banner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    background: #fff7f0;
+    border-radius: 20px;
+    padding: 50px;
+    margin: 60px 0;
+    overflow: hidden;
+}
+
+.category-content{
+    flex: 1;
+}
+
+.tag{
+    display: inline-block;
+    background: #ff6b35;
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.category-content h2{
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #222;
+}
+
+.category-content p{
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.category-btn{
+    display: inline-block;
+    text-decoration: none;
+    background: #ff6b35;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.category-btn:hover{
+    background: #e65a28;
+    transform: translateY(-2px);
+}
+
+.category-image{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.category-image img{
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width: 992px){
+
+    .category-banner{
+        padding: 40px 30px;
+        gap: 30px;
+    }
+
+    .category-content h2{
+        font-size: 2rem;
+    }
+
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width: 768px){
+
+    .category-banner{
+        flex-direction: column-reverse;
+        text-align: center;
+        padding: 30px 20px;
+    }
+
+    .category-content p{
+        max-width: 100%;
+    }
+
+    .category-content h2{
+        font-size: 1.8rem;
+    }
+
+    .category-btn{
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .category-image img{
+        max-width: 320px;
+    }
+
+}
+
+/* ---------- Small Mobile ---------- */
+
+@media (max-width: 480px){
+
+    .category-banner{
+        padding: 25px 15px;
+        border-radius: 15px;
+    }
+
+    .tag{
+        font-size: 12px;
+    }
+
+    .category-content h2{
+        font-size: 1.5rem;
+    }
+
+    .category-content p{
+        font-size: .9rem;
+    }
+
+    .category-btn{
+        padding: 12px 20px;
+        font-size: .95rem;
+    }
+
+}
 .hero-eyebrow{
   position:relative; z-index:1; display:inline-block; background:rgba(255,255,255,0.22);
   padding:6px 14px; border-radius:999px; font-size:0.76rem; font-weight:700; letter-spacing:.3px;

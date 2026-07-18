@@ -4,8 +4,47 @@
  import "./css/common.css"
  import "./css/admin.css"
  import { Link } from "react-router-dom";
+ import { useState,useEffect } from "react";
+ import axios from "axios";
+
+
 
 function Admin_manage_food_dashboard(){
+  const [foods, setFoods] = useState([]);
+  const getFoods = async () => {
+  try {
+
+    const response = await axios.get(
+      "http://localhost:3000/api/foods"
+    );
+
+    setFoods(response.data.foods);
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+};
+  useEffect(() => {
+  getFoods();
+}, []);
+
+const deleteFood = async (id) => {
+  try {
+
+    await axios.delete(`http://localhost:3000/api/foods/${id}`);
+
+    alert("Food Deleted Successfully");
+
+    getFoods();   // List refresh
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+};
   return(
 <div className="layout-with-side">
   <aside className="sidenav">
@@ -29,7 +68,7 @@ function Admin_manage_food_dashboard(){
 
     <main className="app-shell">
       <div className="section-head" style={{marginTop:"0"}}>
-        <h2>All Foods (5)</h2>
+        <h2>All Foods ({foods.length})</h2>
         <Link to="/admin/add-food" className="btn btn-primary btn-sm">+ Add New Food</Link>
       </div>
 
@@ -39,61 +78,20 @@ function Admin_manage_food_dashboard(){
             <tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Description</th><th>Action</th></tr>
           </thead>
           <tbody>
-            <tr>
-              <td><div className="food-thumb-sm grad-1">🍕</div></td>
-              <td>Cheese Pizza</td>
-              <td><span className="badge badge-orange">Pizza</span></td>
-              <td className="price">Rs. 1200</td>
-              <td className="muted desc-cell">Fresh mozzarella with special pizza sauce</td>
-              <td className="action-cell">
-                <Link to="/admin/add-food-edit" className="action-link">Edit</Link>
-                <Link to="#" className="action-link del-link">Delete</Link>
-              </td>
+            {foods.map((food) => (
+              <tr key={food._id}>
+                <td><div className="food-thumb-sm grad-1">{food.foodName[0]}</div></td>
+                <td>{food.foodName}</td>
+                <td><span className="badge badge-orange">{food.category}</span></td>
+                <td className="price">Rs. {food.price}</td>
+                <td className="muted desc-cell">{food.description}</td>
+                <td className="action-cell">
+                  <Link to={`/admin/add-food-edit/${food._id}`} className="action-link">Edit</Link>
+                  <button onClick={() => deleteFood(food._id)} className="action-link del-link">Delete</button>
+                  </td>
             </tr>
-            <tr>
-              <td><div className="food-thumb-sm grad-2">🍔</div></td>
-              <td>Zinger Burger</td>
-              <td><span className="badge badge-orange">Burger</span></td>
-              <td className="price">Rs. 650</td>
-              <td className="muted desc-cell">Crispy chicken fillet with mayo</td>
-              <td className="action-cell">
-                <Link to="/admin/add-food-edit" className="action-link">Edit</Link>
-                <Link to="#" className="action-link del-link">Delete</Link>
-              </td>
-            </tr>
-            <tr>
-              <td><div className="food-thumb-sm grad-3">🥪</div></td>
-              <td>Chicken Sandwich</td>
-              <td><span className="badge badge-orange">Sandwich</span></td>
-              <td className="price">Rs. 550</td>
-              <td className="muted desc-cell">Grilled chicken, lettuce &amp; cheese</td>
-              <td className="action-cell">
-                <Link to="/admin/add-food-edit" className="action-link">Edit</Link>
-                <Link to="#" className="action-link del-link">Delete</Link>
-              </td>
-            </tr>
-            <tr>
-              <td><div className="food-thumb-sm grad-4">🍟</div></td>
-              <td>French Fries</td>
-              <td><span className="badge badge-orange">Sides</span></td>
-              <td className="price">Rs. 320</td>
-              <td className="muted desc-cell">Crispy golden fries, salted</td>
-              <td className="action-cell">
-                <Link to="/admin/add-food-edit" className="action-link">Edit</Link>
-                <Link to="#" className="action-link del-link">Delete</Link>
-              </td>
-            </tr>
-            <tr>
-              <td><div className="food-thumb-sm grad-5">🥤</div></td>
-              <td>Coke (1.5L)</td>
-              <td><span className="badge badge-orange">Drinks</span></td>
-              <td className="price">Rs. 250</td>
-              <td className="muted desc-cell">Chilled soft drink</td>
-              <td className="action-cell">
-                <Link to="/admin/add-food-edit" className="action-link">Edit</Link>
-                <Link to="#" className="action-link del-link">Delete</Link>
-              </td>
-            </tr>
+            ))}
+         
           </tbody>
         </table>
       </div>

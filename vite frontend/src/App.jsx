@@ -28,19 +28,19 @@ function App() {
         <Route path="/admin/add-food" element={<Admin_add_food />} />
         <Route path="/admin/dashboard" element={<Admin_dashboard />} />
         <Route path="/admin/manage-orders" element={<Admin_manage_orders />} />
-      <Route path="/user/billing-details" element={<Billing_details />} />
-      <Route path="/user/billing-details" element={<Billing_details />} />
+      <Route path="/user/billing-details/:id" element={<Billing_details />} />
        <Route path="/user/cart" element={<Cart />} />
        <Route path="/user/checkout" element={<Checkout />} />
-       <Route path="/user/food-details" element={<Food_details />} />
-       <Route path="/user/food-listing" element={<Food_listing />} />
+        <Route path="/user/food-details/:id"element={<Food_details />}/>      
+        <Route path="/user/food-listing" element={<Food_listing />} />
        <Route path="/login" element={<Login />} />
        <Route path="/login-admin" element={<Login_admin />} />
        <Route path="/user/my-orders" element={<My_orders />} />
        <Route path="/user/register" element={<Register />} /> 
-       <Route path="/user/order-tracking" element={<Order_tracking />} />
+       <Route path="/user/order-tracking/:id" element={<Order_tracking />} />
+       <Route path="/admin/order-tracking/:id" element={<Order_tracking />} />
        <Route path="/admin/manage-food" element={<Admin_manage_food_dashboard />} />
-       <Route path="/admin/add-food-edit" element={<Admin_add_food_edit />} />
+       <Route path="/admin/add-food-edit/:id" element={<Admin_add_food_edit />} />
       </Routes>
     </BrowserRouter>
   );

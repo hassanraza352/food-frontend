@@ -12,7 +12,51 @@
 }
 .pay-option.selected{border-color:var(--orange); background:rgba(255,90,54,0.06);}
 .pay-option input{accent-color:var(--orange); width:17px; height:17px;}
+.address-box{
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #fff;
+    margin-top: 10px;
+}
 
+.addr-icon{
+    font-size: 24px;
+    margin-top: 4px;
+}
+
+.address-content{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+}
+
+.address-content strong{
+    font-size: 15px;
+    color: #222;
+}
+
+.address-content input{
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.address-content input::placeholder{
+    color: #999;
+}
+
+.address-content input:focus{
+    border-color: #ff6b35;
+}
 /* ---------- mobile responsive ---------- */
 @media (max-width:480px){
   .address-box{padding:12px 14px;}
