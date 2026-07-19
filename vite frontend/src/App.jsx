@@ -16,32 +16,164 @@ import Register from "./register.jsx";
 import Order_tracking from "./order-tracking.jsx";
 import Admin_manage_food_dashboard from "./admin-manage-food.jsx";
 import Admin_add_food_edit from "./admin-add-food-edit.jsx";
+import Order_tracking_admin from "./admin-order-tracking.jsx";
+import ProtectedRoute from "./service/protectedRoutes.jsx";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 
 function App() {
+      const [user, setUser] = useState(null);
+const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    axios.get(
+        "http://localhost:3000/api/me",
+        {
+            withCredentials: true
+        }
+    )
+    .then((response) => {
+
+        setUser(response.data.user);
+
+    })
+    .catch(() => {
+
+        setUser(null);
+
+    })
+    .finally(() => {
+
+        setLoading(false);
+
+    });
+
+}, []);
+if (loading) {
+    return <h2>Loading...</h2>;
+}
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Index />} />
-        <Route path="/user/home" element={<Home />} />
-        <Route path="/admin/add-food" element={<Admin_add_food />} />
-        <Route path="/admin/dashboard" element={<Admin_dashboard />} />
-        <Route path="/admin/manage-orders" element={<Admin_manage_orders />} />
-      <Route path="/user/billing-details/:id" element={<Billing_details />} />
-       <Route path="/user/cart" element={<Cart />} />
-       <Route path="/user/checkout" element={<Checkout />} />
-        <Route path="/user/food-details/:id"element={<Food_details />}/>      
-        <Route path="/user/food-listing" element={<Food_listing />} />
+
+<Route path="/user/home" element={<ProtectedRoute user={user} allowedRole="user">
+      <Home />
+    </ProtectedRoute> }
+/>  
+
+    <Route path="/user/billing-details/:id" element={<Billing_details />} />
+<Route
+  path="/user/cart"
+  element={
+    <ProtectedRoute
+      user={user}
+      allowedRole="user"
+    >
+      <Cart />
+    </ProtectedRoute>
+  }
+/>     
+<Route
+  path="/user/my-orders"
+  element={
+    <ProtectedRoute user={user} allowedRole="user">
+      <My_orders />
+    </ProtectedRoute>
+  }
+/>       <Route path="/user/register" element={<Register />} /> 
+<Route
+  path="/user/order-tracking/:id"
+  element={
+    <ProtectedRoute user={user} allowedRole="user">
+      <Order_tracking />
+    </ProtectedRoute>
+  }
+/>        
+<Route
+  path="/user/checkout"
+  element={
+    <ProtectedRoute user={user} allowedRole="user">
+      <Checkout />
+    </ProtectedRoute>
+  }
+/>     
+<Route
+  path="/user/food-details/:id"
+  element={
+    <ProtectedRoute user={user} allowedRole="user">
+      <Food_details />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/user/food-listing"
+  element={
+    <ProtectedRoute user={user} allowedRole="user">
+      <Food_listing />
+    </ProtectedRoute>
+  }
+/>
+
        <Route path="/login" element={<Login />} />
        <Route path="/login-admin" element={<Login_admin />} />
-       <Route path="/user/my-orders" element={<My_orders />} />
-       <Route path="/user/register" element={<Register />} /> 
-       <Route path="/user/order-tracking/:id" element={<Order_tracking />} />
-       <Route path="/admin/order-tracking/:id" element={<Order_tracking />} />
-       <Route path="/admin/manage-food" element={<Admin_manage_food_dashboard />} />
-       <Route path="/admin/add-food-edit/:id" element={<Admin_add_food_edit />} />
-      </Routes>
+
+
+
+<Route
+  path="/admin/add-food"
+  element={
+    <ProtectedRoute user={user} allowedRole="admin">
+      <Admin_add_food />
+    </ProtectedRoute>
+  }
+/><Route
+  path="/admin/dashboard"
+  element={
+    <ProtectedRoute
+      user={user}
+      allowedRole="admin"
+    >
+      <Admin_dashboard />
+    </ProtectedRoute>
+  }
+/>        
+
+<Route
+  path="/admin/manage-orders"
+  element={
+    <ProtectedRoute user={user} allowedRole="admin">
+      <Admin_manage_orders />
+    </ProtectedRoute>
+  }
+/>  
+<Route
+  path="/admin/order-tracking/:id"
+  element={
+    <ProtectedRoute user={user} allowedRole="admin">
+      <Order_tracking_admin />
+    </ProtectedRoute>
+  }
+/><Route
+  path="/admin/manage-food"
+  element={
+    <ProtectedRoute user={user} allowedRole="admin">
+      <Admin_manage_food_dashboard />
+    </ProtectedRoute>
+  }
+/>       
+<Route
+  path="/admin/add-food-edit/:id"
+  element={
+    <ProtectedRoute user={user} allowedRole="admin">
+      <Admin_add_food_edit />
+    </ProtectedRoute>
+  }
+/>      </Routes>
     </BrowserRouter>
   );
 }

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-function Order_tracking(){
+function Order_tracking_admin(){
   const {id}= useParams();
   const [order, setOrder] = useState(null);
 
@@ -107,11 +107,11 @@ const currentStep = steps.indexOf(order.status);
 
 </ul>
 
-      <Link to="/user/my-orders" className="btn btn-outline btn-block">View hassadn Details</Link>
+      <Link to="/admin/manage-orders" className="btn btn-outline btn-block">View other order Details</Link>
     </div>
   </div>
 </div>
   )}
-  export default Order_tracking;
+  export default Order_tracking_admin;
 
 

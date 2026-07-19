@@ -1,12 +1,57 @@
 
-{/* <link rel="stylesheet" to="css/common.css">
-<link rel="stylesheet" to="css/login.css"> */}
-
 import "./css/common.css"
 import "./css/login.css"
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 
 function Login(){
+    const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+});
+
+const handleSubmit = async (e) => {
+
+    e.preventDefault();
+
+    try {
+
+        const response = await axios.post(
+            "http://localhost:3000/api/login",
+            formData,
+            {
+                withCredentials: true
+            }
+        );
+
+        console.log(response.data);
+
+        if (response.data.user.role !== "admin") {
+
+            alert("You are not an admin");
+            return;
+
+        }
+
+        navigate("/admin/dashboard");
+
+    }
+    catch (error) {
+
+        console.log(error);
+
+        alert(
+            error.response?.data?.message ||
+            "Login failed"
+        );
+
+    }
+
+};
   return(
 <div className="center-shell admin-shell">
   <div className="auth-card ticket rise">
@@ -21,21 +66,32 @@ function Login(){
     <h1 className="auth-title">Admin Console 🔐</h1>
     <p className="muted auth-sub">Manage your restaurant network</p>
 
-    <form className="auth-form" onsubmit="return false;">
+    <form className="auth-form" onSubmit={handleSubmit}>
       <div className="field">
-        <label for="email">Admin Email</label>
-        <input type="email" id="email" placeholder="Enter your admin email"/>
+        <label htmlFor="email">Admin Email</label>
+        <input value={formData.email}
+    onChange={(e) =>
+        setFormData({
+            ...formData,
+            email: e.target.value})
+    } type="email" id="email" placeholder="Enter your admin email"/>
       </div>
       <div className="field">
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <div className="input-wrap">
-          <input type="password" id="password" placeholder="Enter your password"/>
+          <input  value={formData.password}
+    onChange={(e) =>
+        setFormData({
+            ...formData,
+            password: e.target.value
+        })
+    } type="password" id="password" placeholder="Enter your password"/>
           <span className="toggle-eye">👁️</span>
         </div>
         <Link to="#" className="forgot-link">Forgot password?</Link>
       </div>
 
-      <Link to="/admin/dashboard" className="btn btn-purple btn-block btn-cta">Login to Dashboard</Link>
+      <button  className="btn btn-purple btn-block btn-cta">Login to Dashboard</button>
     </form>
 
     <p className="auth-foot muted">Not an admin? <Link to="/login" className="link-orange">Go to user login</Link></p>

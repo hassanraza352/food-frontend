@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-
 function Login(){
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -23,11 +21,22 @@ const handleSubmit = async (e) => {
           withCredentials: true
         }
       );
-      navigate("/user/home");
-      console.log(response.data);
+     const loggedInUser = response.data.user;
+    console.log(loggedInUser.role);
+
+
+if (loggedInUser.role === "user") {
+    navigate("/user/home");
+}
+else {
+  alert("You are not a user");
+  navigate("/login");
+}
+
 
     }
     catch(error){
+      alert('invalid user');
       console.log("login mei error arha ha")
       console.log(error);
     }
