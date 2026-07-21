@@ -2,23 +2,6 @@ import "./css/common.css"
 import "./css/home.css"
 import { Link } from "react-router-dom";
 
-//   {
-//     id: 1,
-//     name: "Pizza Palace",
-//     rating: 4.5,
-//     time: "30-40 min",
-//      category: "Pizza",
-//   },
-//   {
-//     id: 2,
-//     name: "Burger King",
-//     rating: 4.3,
-//     time: "20-30 min",
-//      category: "Burger",
-
-//   }
-// ];
-
 
 function Home(){
 

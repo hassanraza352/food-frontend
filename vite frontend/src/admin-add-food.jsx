@@ -17,23 +17,30 @@ const [price, setPrice] = useState("");
 const [description, setDescription] = useState("");
 //const [image, setImage] = useState("");
 const [available, setAvailable] = useState(true);
+const [image, setImage] = useState(null);
+
 
 
   const addFood = async (e) => {
   e.preventDefault();
 
+  const formData = new FormData();
+
+formData.append("foodName", foodName);
+formData.append("category", category);
+formData.append("price", price);
+formData.append("description", description);
+formData.append("available", available);
+formData.append("image", image);
   try {
 
-    const response = await axios.post(
-      "http://localhost:3000/api/foods",
-      {
-        foodName,
-        category,
-        price,
-        description,
-        available
-      }
-    );
+   const response = await axios.post(
+  "http://localhost:3000/api/foods",
+  formData,
+  {
+    withCredentials: true,
+  }
+);
 
     console.log(response.data);
 
@@ -49,6 +56,17 @@ const [available, setAvailable] = useState(true);
 
   }
 };
+const logout = async () => {
+  await axios.post(
+    "http://localhost:3000/api/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+
+  navigate("/");
+};
 return(
 <div className="layout-with-side">
   <aside className="sidenav">
@@ -61,7 +79,7 @@ return(
       <Link to="/admin/manage-food">📂Food added List</Link>
       <Link to="#">⚙️ Settings</Link>
     </nav>
-    <div className="nav-foot"><Link to="/">🚪 Logout</Link></div>
+    <div className="nav-foot"><buttton onClick={logout} >🚪 Logout</buttton ></div>
   </aside>
 
   <div className="layout-main admin-main">
@@ -111,15 +129,35 @@ return(
         </div>
 
         <div className="field">
-          <label>Food Image</label>
-          <div className="upload-box">
-            <div className="upload-preview">🍕</div>
-            <div>
-              <span className="btn btn-outline btn-sm">Choose File</span>
-              <p className="muted mt-8" style={{ fontSize: "0.78rem" }}>No file chosen</p>
-            </div>
-          </div>
-        </div>
+  <label>Food Image</label>
+
+  <div className="upload-box">
+
+    <div className="upload-preview">🍕</div>
+
+    <div>
+      <label htmlFor="imageUpload" className="btn btn-outline btn-sm">
+        Choose File
+      </label>
+
+      <input
+        type="file"
+        id="imageUpload"
+        hidden
+        accept="image/*"
+        onChange={(e) => setImage(e.target.files[0])}
+      />
+
+      <p
+        className="muted mt-8"
+        style={{ fontSize: "0.78rem" }}
+      >
+        {image ? image.name : "No file chosen"}
+      </p>
+    </div>
+
+  </div>
+</div>
 
 <button
   type="submit"

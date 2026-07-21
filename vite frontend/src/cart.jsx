@@ -14,7 +14,7 @@ function Cart(){
         withCredentials: true
     })
     .then((response) => {
-
+          console.log("axios mei")
         console.log(response.data);
 
         setCartItems(response.data.cart);
@@ -48,6 +48,8 @@ setCartItems(
 };
 
 const subtotal = cartItems.reduce((total, item) => {
+    if (!item.food) return total;
+
     return total + (item.food.price * item.quantity);
 }, 0);
 const increaseQuantity = (item) => {
@@ -111,7 +113,6 @@ const decreaseQuantity = (item) => {
 };
 
 const deliveryFee = 100;
-
 const total = subtotal + deliveryFee;
   return(
 <div className="center-shell details-shell">
@@ -123,9 +124,14 @@ const total = subtotal + deliveryFee;
     </div>
 
     <div className="panel-body">
-      {cartItems.map((item) => (
+      {cartItems
+  .filter(item => item.food)
+  .map(item  => (
         <div className="cart-item ticket" key={item._id}>
-          <div className="food-thumb grad-1">🍕</div>
+          <div className="food-thumb grad-1"><img
+  src={`http://localhost:3000/${item.food.image}`}
+
+/></div>
         <div className="food-meta">
           <h3>{item.food.foodName}</h3>
           <p className="muted">{item.food.category}</p>
@@ -147,9 +153,9 @@ const total = subtotal + deliveryFee;
 
       <div className="summary-box">
         <div className="summary-row"><span className="muted">Subtotal</span><span className="price">{subtotal}</span></div>
-        <div className="summary-row"><span className="muted">Delivery Fee</span><span className="price">Rs {deliveryFee}</span></div>
+        <div className="summary-row"><span className="muted">Delivery Fee</span><span className="price"> Rs {cartItems.length > 0 ? deliveryFee : 0}</span></div>
         <hr className="divider"/>
-        <div className="summary-row total"><span>Total</span><span className="price">{total}</span></div>
+        <div className="summary-row total"><span>Total</span><span className="price">{cartItems.length > 0 ? total : 0}</span></div>
       </div>
 
       <Link to="/user/checkout" className="btn btn-primary btn-block btn-cta">Proceed to Checkout</Link>

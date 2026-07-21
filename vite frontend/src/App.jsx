@@ -21,6 +21,7 @@ import ProtectedRoute from "./service/protectedRoutes.jsx";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import VerifyOtp from "./VerifyOtp";
 
 
 
@@ -142,6 +143,10 @@ if (loading) {
     </ProtectedRoute>
   }
 />        
+<Route
+    path="/verify-otp"
+    element={<VerifyOtp />}
+/>
 
 <Route
   path="/admin/manage-orders"
@@ -175,7 +180,9 @@ if (loading) {
   }
 />      </Routes>
     </BrowserRouter>
+    
   );
+  
 }
 
 export default App;

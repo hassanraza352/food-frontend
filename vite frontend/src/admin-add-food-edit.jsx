@@ -9,24 +9,26 @@ import "./css/admin.css"
 
 
 function Admin_add_food_edit(){
+  
    const navigate = useNavigate();
   const {id} = useParams();
   const [foodName, setFoodName] = useState("");
 const [category, setCategory] = useState("");
 const [price, setPrice] = useState("");
 const [description, setDescription] = useState("");
-const [image, setImage] = useState("");
+const [image, setImage] = useState(null);
 const [available, setAvailable] = useState(true);
 
-  useEffect(() => {
-  getFood();
-}, []);
+
 
 const getFood = async () => {
 
-  const response = await axios.get(
-    `http://localhost:3000/api/foods/${id}`
-  );
+const response = await axios.get(
+  `http://localhost:3000/api/foods/${id}`,
+  {
+    withCredentials: true
+  }
+);
 
 const food = response.data.food;
 
@@ -43,24 +45,42 @@ const updateFood = async (e) => {
 
   try {
 
-    await axios.put(
-      `http://localhost:3000/api/foods/${id}`,
-      {
-        foodName,
-        category,
-        price,
-        description,
-        image,
-        available
-      }
-    );
+   await axios.put(
+  `http://localhost:3000/api/foods/${id}`,
+  {
+    foodName,
+    category,
+    price,
+    description,
+    image,
+    available
+  },
+  {
+    withCredentials: true
+  }
+);
      navigate("/admin/manage-food");
 
   } catch (error) {
     console.log(error);
   }
 };
+  useEffect(() => {
+  getFood();
+}, []);
 
+
+const logout = async () => {
+  await axios.post(
+    "http://localhost:3000/api/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+
+  navigate("/");
+};
 return(
 <div className="layout-with-side">
   <aside className="sidenav">
@@ -73,7 +93,7 @@ return(
       <Link to="/admin/manage-food">📂Food added List</Link>
       <Link to="#">⚙️ Settings</Link>
     </nav>
-    <div className="nav-foot"><Link to="/">🚪 Logout</Link></div>
+    <div className="nav-foot"><button onClick={logout}>🚪 Logout</button></div>
   </aside>
 
   <div className="layout-main admin-main">
@@ -105,22 +125,41 @@ return(
             <input type="number" value={price} onChange={(e) => setPrice(e.target.value)}id="price" placeholder="e.g. 1200"/>
           </div>
         </div>
-
         <div className="field">
           <label htmlFor="desc">Description</label>
           <textarea value={description} onChange={(e) => setDescription(e.target.value)}id="desc" rows="4" placeholder="Enter food description"></textarea>
         </div>
 
-        <div className="field">
-          <label>Food Image</label>
-          <div className="upload-box">
-            <div className="upload-preview">🍕</div>
-            <div>
-              <span className="btn btn-outline btn-sm">Choose File</span>
-              <p className="muted mt-8" style={{ fontSize: "0.78rem" }}>No file chosen</p>
-            </div>
-          </div>
-        </div>
+      <div className="field">
+  <label>Food Image</label>
+
+  <div className="upload-box">
+
+    <div className="upload-preview">🍕</div>
+
+    <div>
+      <label htmlFor="imageUpload" className="btn btn-outline btn-sm">
+        Choose File
+      </label>
+
+      <input
+        type="file"
+        id="imageUpload"
+        hidden
+        accept="image/*"
+        onChange={(e) => setImage(e.target.files[0])}
+      />
+
+      <p
+        className="muted mt-8"
+        style={{ fontSize: "0.78rem" }}
+      >
+        {image ? image.name : "No file chosen"}
+      </p>
+    </div>
+
+  </div>
+</div>
 
 <button
   type="submit"

@@ -16,7 +16,9 @@ function Order_tracking_admin(){
   useEffect(() => {
 
     axios.get(
-        `http://localhost:3000/api/orders/${id}`
+        `http://localhost:3000/api/orders/${id}`,{
+          withCredentials: true
+        }
     )
     .then((response) => {
 

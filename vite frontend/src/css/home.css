@@ -10,6 +10,11 @@
   content:""; position:absolute; inset:0; opacity:0.16;
   background:repeating-linear-gradient(115deg, #fff 0 10px, transparent 10px 26px);
 }
+.hero-eyebrow{box-shadow:0 0 0 0 rgba(255,199,44,0.5); animation:eyebrowGlow 2.6s ease-in-out infinite;}
+@keyframes eyebrowGlow{
+  0%,100%{box-shadow:0 0 0 0 rgba(255,199,44,0.45);}
+  50%{box-shadow:0 0 0 6px rgba(255,199,44,0);}
+}
 .hero::after{
   content:""; position:absolute; inset:0;
   background:radial-gradient(circle at 12% 110%, rgba(90,40,0,0.45), transparent 55%);

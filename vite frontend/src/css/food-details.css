@@ -7,8 +7,9 @@
   display:flex; justify-content:space-between; padding:16px; position:relative; z-index:2;
 }
 .details-hero{
-  margin-top:-56px; height:220px; display:grid; place-items:center; font-size:6rem;
-  background:linear-gradient(135deg,#FFD3B0,#FF8A4C);
+  margin-top: -56px;
+  height: 220px;
+  overflow: hidden;
 }
 .grad-1{background:linear-gradient(135deg,#FFD3B0,#FF8A4C);}
 .details-body{padding:26px 28px 30px;}

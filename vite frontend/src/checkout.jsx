@@ -2,12 +2,34 @@ import "./css/common.css"
 import "./css/cart.css"
 import "./css/checkout.css"
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Checkout(){
   const navigate = useNavigate();
+
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3000/api/cart", {
+        withCredentials: true
+    })
+    .then((response) => {
+
+        console.log(response.data);
+
+        setCartItems(response.data.cart);
+
+    })
+    .catch((error) => {
+
+        console.log(error);
+
+    });
+
+}, []);
+
   const [phone, setPhone] = useState("");
 
 const [address, setAddress] = useState("");
@@ -41,7 +63,14 @@ const placeOrder = () => {
 
     });
 
-};
+  }
+   
+   const subtotal = cartItems.reduce((total, item) => {
+    return total + (item.food.price * item.quantity);
+}, 0);
+const deliveryFee = 100;
+
+const total = subtotal + deliveryFee;
   return(
 
 <div className="center-shell details-shell">
@@ -98,7 +127,8 @@ const placeOrder = () => {
       <div>
         <label className="block-label">Payment Method</label>
         <label className="pay-option selected">
-          <input type="radio" name="pay" checked/>
+          <input type="radio" name="pay"  checked={true}
+  readOnly/>
           <span>Cash on Delivery</span>
         </label>
         <label className="pay-option">
@@ -108,10 +138,10 @@ const placeOrder = () => {
       </div>
 
       <div className="summary-box">
-        <div className="summary-row"><span className="muted">Subtotal</span><span className="price">Rs. 2100</span></div>
-        <div className="summary-row"><span className="muted">Delivery Fee</span><span className="price">Rs. 100</span></div>
+        <div className="summary-row"><span className="muted">Subtotal</span><span className="price">Rs. {subtotal}</span></div>
+        <div className="summary-row"><span className="muted">Delivery Fee</span><span className="price">Rs.{cartItems.length > 0 ? deliveryFee : 0} </span></div>
         <hr className="divider"/>
-        <div className="summary-row total"><span>Total</span><span className="price">Rs. 2200</span></div>
+        <div className="summary-row total"><span>Total</span><span className="price">Rs. {cartItems.length > 0 ? total : 0}</span></div>
       </div>
 
       <button to="/user/order-tracking" className="btn btn-primary btn-block btn-cta" onClick={placeOrder}>Place Order</button>

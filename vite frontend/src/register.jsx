@@ -25,7 +25,11 @@ const handleSubmit = async (e) => {
                 withCredentials: true
             }
         );
-        navigate("/user/home");
+        navigate("/verify-otp", {
+    state: {
+        email: formData.email
+    }
+});
 
         console.log(response.data);
 

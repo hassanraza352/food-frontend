@@ -12,7 +12,9 @@ const [search, setSearch] = useState("");
  const [selectedCategory, setSelectedCategory] = useState("All");
  const [sortOrder, setSortOrder] = useState("");
  useEffect(() => {
-     axios.get("http://localhost:3000/api/foods")
+     axios.get("http://localhost:3000/api/foods",{
+        withCredentials: true
+     })
         .then((response) => {
            setFoods(response.data.foods);
         })
@@ -108,7 +110,10 @@ if (sortOrder === "highToLow") {
  <Link to={`/user/food-details/${food._id}`} className="food-row ticket lift rise rise-1"
      key={food._id}
  >
-          <div className="food-thumb grad-1">🍕</div>
+          <div className="food-thumb grad-1"><img
+  src={`http://localhost:3000/${food.image}`}
+
+/></div>
           <div className="food-meta">
             <h3>{food.foodName}</h3>
             <p className="muted">{food.category}</p>

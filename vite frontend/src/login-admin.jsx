@@ -28,7 +28,7 @@ const handleSubmit = async (e) => {
             }
         );
 
-        console.log(response.data);
+        console.log(response.data.user);
 
         if (response.data.user.role !== "admin") {
 
@@ -38,6 +38,7 @@ const handleSubmit = async (e) => {
         }
 
         navigate("/admin/dashboard");
+        window.location.reload();
 
     }
     catch (error) {

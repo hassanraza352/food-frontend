@@ -13,29 +13,31 @@
   --orange:#FF5A36;
   --orange-2:#FF8A4C;
   --orange-dark:#D8431F;
-  --brown:#8A4B12;
-  --brown-2:#C9832B;
-  --brown-dark:#5C3009;
-  --navy:#241608;
-  --navy-2:#331F0C;
-  --navy-3:#40280F;
-  --ink:#221933;
-  --ink-soft:#5B5270;
-  --muted:#948CA3;
-  --line:#EFE2D2;
-  --line-dark:#5A3B1C;
+  --brown:#1A1A1A;
+  --brown-2:#2B2B2B;
+  --brown-dark:#0D0D0D;
+  --navy:#141414;
+  --navy-2:#1E1E1E;
+  --navy-3:#282828;
+  --ink:#1A1A1A;
+  --ink-soft:#4A4A4A;
+  --muted:#8A8A8A;
+  --line:#F0E3D0;
+  --line-dark:#333333;
   --green:#22B573;
   --red:#FF4D5E;
   --yellow:#FFC72C;
   --yellow-dark:#E8A800;
+  --black:#111111;
   --white:#FFFFFF;
 
   --radius-sm:10px;
   --radius:16px;
   --radius-lg:26px;
-  --shadow-sm:0 4px 14px rgba(60,30,10,0.07);
-  --shadow:0 14px 34px rgba(60,20,60,0.12);
-  --shadow-lg:0 24px 60px rgba(30,10,50,0.18);
+  --shadow-sm:0 4px 14px rgba(0,0,0,0.08);
+  --shadow:0 14px 34px rgba(0,0,0,0.16);
+  --shadow-lg:0 24px 60px rgba(0,0,0,0.22);
+  --glow-yellow:0 0 0 rgba(255,199,44,0);
 
   --font-display:'Poppins',sans-serif;
   --font-body:'Work Sans',sans-serif;
@@ -126,10 +128,20 @@ h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); line-height:1.2;}
 
 /* pulse for main CTAs */
 @keyframes pulseGlow{
-  0%,100%{box-shadow:0 10px 24px rgba(255,90,54,0.35);}
-  50%{box-shadow:0 10px 34px rgba(255,90,54,0.6);}
+  0%,100%{box-shadow:0 10px 24px rgba(255,90,54,0.35), 0 0 0 0 rgba(255,199,44,0.35);}
+  50%{box-shadow:0 10px 34px rgba(255,90,54,0.6), 0 0 0 8px rgba(255,199,44,0);}
 }
 .btn-cta{animation:pulseGlow 2.4s ease-in-out infinite;}
+
+/* shine sweep on primary/yellow buttons — subtle black/orange/yellow highlight */
+.btn-primary, .btn-yellow, .btn-purple{position:relative; overflow:hidden;}
+.btn-primary::after, .btn-yellow::after, .btn-purple::after{
+  content:""; position:absolute; top:0; left:-60%; width:40%; height:100%;
+  background:linear-gradient(115deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform:skewX(-20deg); transition:left .55s ease;
+}
+.btn-primary:hover::after, .btn-yellow:hover::after, .btn-purple:hover::after{left:130%;}
+.btn:active{transform:scale(.96);}
 
 /* ---------- cards ---------- */
 .card{
@@ -213,8 +225,10 @@ h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); line-height:1.2;}
 .search-box input{
     border: none;
   outline: none;
-  color: #e26bb2;
+  color: var(--ink);
+  background: transparent;
 }
+.search-box input::placeholder{ color: var(--muted); }
 .topbar-icons{display:flex; align-items:center; gap:16px;}
 .icon-btn{
   width:40px; height:40px; border-radius:12px; display:grid; place-items:center;
@@ -297,7 +311,9 @@ h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); line-height:1.2;}
     width:100%; min-height:auto; position:sticky; top:0; z-index:60;
     flex-direction:row; align-items:center; padding:10px 14px; gap:10px;
     overflow-x:auto; -webkit-overflow-scrolling:touch;
+    transition:background .2s ease;
   }
+  .sidenav a.active{animation:riseIn .35s ease both;}
   .sidenav .brand{flex-shrink:0; font-size:1.05rem;}
   .sidenav .nav-group{flex-direction:row; margin-top:0; flex-shrink:0; gap:4px;}
   .sidenav a{white-space:nowrap; padding:8px 12px; font-size:0.8rem;}
@@ -324,4 +340,11 @@ h1,h2,h3,h4{font-family:var(--font-display); color:var(--ink); line-height:1.2;}
 @media (max-width:420px){
   html{font-size:14.5px;}
   .hero-eyebrow, .badge{font-size:0.7rem;}
+}
+
+/* ---------- touch feedback (phones/tablets) ---------- */
+@media (hover:none){
+  .lift:active, .card:active, .ticket:active{transform:scale(.98); box-shadow:var(--shadow-sm);}
+  .icon-btn:active, .cat-pill:active, .qty-btn:active{transform:scale(.9); background:var(--cream-2);}
+  .btn:active{filter:brightness(.95);}
 }

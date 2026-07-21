@@ -33,7 +33,7 @@ import "./css/common.css"
       </Link>
     </div>
 
-    <p className="role-foot muted">New here? <Link to="/register" className="link-orange">Create a customer account</Link></p>
+    <p className="role-foot muted">New here? <Link to="/user/register" className="link-orange">Create a customer account</Link></p>
   </div>
 </div>
 )}

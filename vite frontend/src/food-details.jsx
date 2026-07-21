@@ -15,7 +15,9 @@ function Food_details(){
   const [food, setFood] = useState(null);
 const {id}=useParams();
 useEffect(() => {
-  axios.get(`http://localhost:3000/api/foods/${id}`)
+  axios.get(`http://localhost:3000/api/foods/${id}`,{
+    withCredentials: true
+  })
     .then((response) => {
       setFood(response.data.food);
     })
@@ -67,7 +69,17 @@ const total_price=quantity*food.price;
       <span className="icon-btn">🤍</span>
     </div>
 
-    <div className="details-hero grad-1">🍕</div>
+ <div className="details-hero">
+  <img
+    src={`http://localhost:3000/${food.image}`}
+    alt={food.foodName}
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
+    }}
+  />
+</div>
 
     <div className="details-body">
       <h1>{food.foodName}</h1>

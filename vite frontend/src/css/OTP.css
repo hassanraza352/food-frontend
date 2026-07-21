@@ -1,0 +1,113 @@
+/* ============================================
+   EMAIL / OTP VERIFICATION
+   uses shared tokens from common.css (--cream, --orange, --yellow, --brown-dark etc.)
+   ============================================ */
+
+.otp-shell{
+  min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding:32px 20px;
+}
+
+.otp-card{
+  width:100%; max-width:400px;
+  background:#fff;
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);
+  padding:38px 34px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+/* subtle top accent bar */
+.otp-card::before{
+  content:"";
+  position:absolute; top:0; left:0; right:0; height:4px;
+  background:linear-gradient(90deg, var(--orange), var(--yellow), var(--brown-dark));
+  background-size:200% 100%;
+  animation:otpAccentMove 3s linear infinite;
+}
+@keyframes otpAccentMove{
+  0%{background-position:0% 0;}
+  100%{background-position:200% 0;}
+}
+
+.otp-title{
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  font-weight:800;
+  color:var(--ink);
+  margin-bottom:8px;
+}
+
+.otp-email{
+  font-size:0.9rem;
+  color:var(--muted);
+  margin-bottom:26px;
+  word-break:break-all;
+}
+
+.otp-form{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.otp-input{
+  width:100%;
+  padding:14px 16px;
+  border-radius:12px;
+  border:1.5px solid var(--line);
+  background:#fffaf4;
+  color:var(--ink);
+  font-size:1.1rem;
+  letter-spacing:6px;
+  text-align:center;
+  font-family:var(--font-mono);
+  transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.otp-input::placeholder{
+  letter-spacing:normal;
+  font-family:var(--font-body);
+  color:var(--muted);
+}
+.otp-input:focus{
+  outline:none;
+  border-color:var(--orange);
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(255,90,54,0.12);
+}
+
+.otp-btn{
+  margin-top:4px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* pulsing yellow glow to draw the eye, matches the shared CTA style */
+@keyframes otpBtnGlow{
+  0%,100%{box-shadow:0 10px 24px rgba(255,90,54,0.35), 0 0 0 0 rgba(255,199,44,0.35);}
+  50%{box-shadow:0 10px 34px rgba(255,90,54,0.6), 0 0 0 8px rgba(255,199,44,0);}
+}
+.otp-btn{animation:otpBtnGlow 2.4s ease-in-out infinite;}
+.otp-btn:active{transform:scale(.97);}
+
+/* entrance animation for the card */
+@keyframes otpRise{
+  from{opacity:0; transform:translateY(18px) scale(.98);}
+  to{opacity:1; transform:translateY(0) scale(1);}
+}
+.otp-card{animation:otpRise .5s cubic-bezier(.2,.7,.3,1) both;}
+
+/* ---------- mobile responsive ---------- */
+@media (max-width:480px){
+  .otp-card{padding:28px 22px; border-radius:20px;}
+  .otp-title{font-size:1.2rem;}
+  .otp-email{font-size:0.82rem; margin-bottom:20px;}
+  .otp-input{font-size:1rem; letter-spacing:4px; padding:12px 14px;}
+}
+
+@media (hover:none){
+  .otp-btn:active{filter:brightness(.95);}
+}

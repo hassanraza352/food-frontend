@@ -27,6 +27,7 @@ const handleSubmit = async (e) => {
 
 if (loggedInUser.role === "user") {
     navigate("/user/home");
+    window.location.reload();
 }
 else {
   alert("You are not a user");

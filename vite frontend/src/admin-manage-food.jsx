@@ -6,11 +6,13 @@
  import { Link } from "react-router-dom";
  import { useState,useEffect } from "react";
  import axios from "axios";
+ import { useNavigate } from "react-router-dom";
+
 
 
 
 function Admin_manage_food_dashboard(){
-  const [foods, setFoods] = useState([]);
+  const navigate = useNavigate();  const [foods, setFoods] = useState([]);
   const getFoods = async () => {
   try {
 
@@ -33,7 +35,10 @@ function Admin_manage_food_dashboard(){
 const deleteFood = async (id) => {
   try {
 
-    await axios.delete(`http://localhost:3000/api/foods/${id}`);
+    await axios.delete(`http://localhost:3000/api/foods/${id}`,{
+      withCredentials: true
+    });
+
 
     alert("Food Deleted Successfully");
 
@@ -45,6 +50,18 @@ const deleteFood = async (id) => {
 
   }
 };
+const logout = async () => {
+  await axios.post(
+    "http://localhost:3000/api/logout",
+    {},
+    {
+      withCredentials: true,
+    }
+  );
+
+  navigate("/");
+};
+
   return(
 <div className="layout-with-side">
   <aside className="sidenav">
@@ -57,7 +74,7 @@ const deleteFood = async (id) => {
       <Link to="#" className="active">📂 Food added List</Link>
       <Link to="#">⚙️ Settings</Link>
     </nav>
-    <div className="nav-foot"><Link to="/">🚪 Logout</Link></div>
+    <div className="nav-foot"><Link onClick={logout} >🚪 Logout</Link></div>
   </aside>
 
   <div className="layout-main admin-main">
@@ -80,7 +97,12 @@ const deleteFood = async (id) => {
           <tbody>
             {foods.map((food) => (
               <tr key={food._id}>
-                <td><div className="food-thumb-sm grad-1">{food.foodName[0]}</div></td>
+                <td><div className="food-thumb-sm grad-1">
+                  <img
+  src={`http://localhost:3000/${food.image}`}
+  alt={food.foodName}
+/>
+                  </div></td>
                 <td>{food.foodName}</td>
                 <td><span className="badge badge-orange">{food.category}</span></td>
                 <td className="price">Rs. {food.price}</td>

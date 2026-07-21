@@ -35,6 +35,9 @@ const changeStatus = async (orderId, newStatus) => {
       `http://localhost:3000/api/orders/${orderId}`,
       {
         status: newStatus
+      },
+      {
+        withCredentials: true
       }
     );
 
