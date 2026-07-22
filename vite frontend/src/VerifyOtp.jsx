@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./css/otp.css"
+import "./css/OTP.css"
 
 function VerifyOtp() {
 
