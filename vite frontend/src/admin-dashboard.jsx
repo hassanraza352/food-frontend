@@ -25,7 +25,7 @@ const getDashboard = async () => {
   try {
 
   const response = await axios.get(
-  "http://localhost:3000/api/admin/dashboard",{
+  "https://food-shop-backend-production-5a9f.up.railway.app/api/admin/dashboard",{
     withCredentials: true
   }
 );
@@ -46,7 +46,7 @@ useEffect(() => {
 
 const logout = async () => {
   await axios.post(
-    "http://localhost:3000/api/logout",
+    "https://food-shop-backend-production-5a9f.up.railway.app/api/logout",
     {},
     {
       withCredentials: true,

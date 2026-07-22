@@ -24,7 +24,7 @@ const [available, setAvailable] = useState(true);
 const getFood = async () => {
 
 const response = await axios.get(
-  `http://localhost:3000/api/foods/${id}`,
+  `https://food-shop-backend-production-5a9f.up.railway.app/api/foods/${id}`,
   {
     withCredentials: true
   }
@@ -46,7 +46,7 @@ const updateFood = async (e) => {
   try {
 
    await axios.put(
-  `http://localhost:3000/api/foods/${id}`,
+  `https://food-shop-backend-production-5a9f.up.railway.app/api/foods/${id}`,
   {
     foodName,
     category,
@@ -72,7 +72,7 @@ const updateFood = async (e) => {
 
 const logout = async () => {
   await axios.post(
-    "http://localhost:3000/api/logout",
+    "https://food-shop-backend-production-5a9f.up.railway.app/api/logout",
     {},
     {
       withCredentials: true,

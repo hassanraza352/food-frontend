@@ -12,7 +12,7 @@ function Checkout(){
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/cart", {
+    axios.get("https://food-shop-backend-production-5a9f.up.railway.app/api/cart", {
         withCredentials: true
     })
     .then((response) => {
@@ -39,7 +39,7 @@ const [address, setAddress] = useState("");
 const placeOrder = () => {
 
     axios.post(
-        "http://localhost:3000/api/orders",
+        "https://food-shop-backend-production-5a9f.up.railway.app/api/orders",
         {
             phone,
             address

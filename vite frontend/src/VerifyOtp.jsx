@@ -19,7 +19,7 @@ function VerifyOtp() {
         try {
 
             const response = await axios.post(
-                "http://localhost:3000/api/verify-otp",
+                "https://food-shop-backend-production-5a9f.up.railway.app/api/verify-otp",
                 {
                     email,
                     otp

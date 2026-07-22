@@ -10,7 +10,7 @@ function Cart(){
   const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/cart", {
+    axios.get("https://food-shop-backend-production-5a9f.up.railway.app/api/cart", {
         withCredentials: true
     })
     .then((response) => {
@@ -30,7 +30,7 @@ function Cart(){
 
 const removeItem = (id) => {
 axios.delete(
-    `http://localhost:3000/api/cart/${id}`,
+    `https://food-shop-backend-production-5a9f.up.railway.app/api/cart/${id}`,
     {
         withCredentials: true
     }
@@ -55,7 +55,7 @@ const subtotal = cartItems.reduce((total, item) => {
 const increaseQuantity = (item) => {
 
     axios.put(
-        `http://localhost:3000/api/cart/${item._id}`,
+        `https://food-shop-backend-production-5a9f.up.railway.app/api/cart/${item._id}`,
         {
             quantity: item.quantity + 1
         },
@@ -86,7 +86,7 @@ const decreaseQuantity = (item) => {
     if (item.quantity === 1) return;
 
     axios.put(
-        `http://localhost:3000/api/cart/${item._id}`,
+        `https://food-shop-backend-production-5a9f.up.railway.app/api/cart/${item._id}`,
         {
             quantity: item.quantity - 1
         },

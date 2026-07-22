@@ -17,7 +17,7 @@ function Admin_manage_food_dashboard(){
   try {
 
     const response = await axios.get(
-      "http://localhost:3000/api/foods"
+      "https://food-shop-backend-production-5a9f.up.railway.app/api/foods"
     );
 
     setFoods(response.data.foods);
@@ -35,7 +35,7 @@ function Admin_manage_food_dashboard(){
 const deleteFood = async (id) => {
   try {
 
-    await axios.delete(`http://localhost:3000/api/foods/${id}`,{
+    await axios.delete(`https://food-shop-backend-production-5a9f.up.railway.app/foods/${id}`,{
       withCredentials: true
     });
 
@@ -52,7 +52,7 @@ const deleteFood = async (id) => {
 };
 const logout = async () => {
   await axios.post(
-    "http://localhost:3000/api/logout",
+    "https://food-shop-backend-production-5a9f.up.railway.app/api/logout",
     {},
     {
       withCredentials: true,

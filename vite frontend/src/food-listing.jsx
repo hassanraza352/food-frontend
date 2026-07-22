@@ -12,7 +12,7 @@ const [search, setSearch] = useState("");
  const [selectedCategory, setSelectedCategory] = useState("All");
  const [sortOrder, setSortOrder] = useState("");
  useEffect(() => {
-     axios.get("http://localhost:3000/api/foods",{
+     axios.get("https://food-shop-backend-production-5a9f.up.railway.app/api/foods",{
         withCredentials: true
      })
         .then((response) => {

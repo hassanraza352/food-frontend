@@ -32,7 +32,7 @@ const [loading, setLoading] = useState(true);
   useEffect(() => {
 
     axios.get(
-        "http://localhost:3000/api/me",
+        "https://food-shop-backend-production-5a9f.up.railway.app/api/me",
         {
             withCredentials: true
         }

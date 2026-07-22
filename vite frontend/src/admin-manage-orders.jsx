@@ -13,7 +13,7 @@ function Admin_manage_orders(){
  const [orders, setOrders] = useState([]);
  const getOrders = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/api/orders");
+    const response = await axios.get("https://food-shop-backend-production-5a9f.up.railway.app/api/orders");
 
     setOrders(response.data.orders);
 
@@ -32,7 +32,7 @@ const changeStatus = async (orderId, newStatus) => {
   try {
 
     await axios.put(
-      `http://localhost:3000/api/orders/${orderId}`,
+      `https://food-shop-backend-production-5a9f.up.railway.app/api/orders/${orderId}`,
       {
         status: newStatus
       },

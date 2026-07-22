@@ -15,7 +15,7 @@ function Food_details(){
   const [food, setFood] = useState(null);
 const {id}=useParams();
 useEffect(() => {
-  axios.get(`http://localhost:3000/api/foods/${id}`,{
+  axios.get(`https://food-shop-backend-production-5a9f.up.railway.app/api/foods/${id}`,{
     withCredentials: true
   })
     .then((response) => {
@@ -44,7 +44,7 @@ const total_price=quantity*food.price;
 
  function addToCart() {
  axios.post(
-    "http://localhost:3000/api/cart",
+    "https://food-shop-backend-production-5a9f.up.railway.app/api/cart",
     {
         foodId: food._id,
         quantity: quantity

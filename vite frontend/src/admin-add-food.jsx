@@ -35,7 +35,7 @@ formData.append("image", image);
   try {
 
    const response = await axios.post(
-  "http://localhost:3000/api/foods",
+  "https://food-shop-backend-production-5a9f.up.railway.app/api/foods",
   formData,
   {
     withCredentials: true,
@@ -58,7 +58,7 @@ formData.append("image", image);
 };
 const logout = async () => {
   await axios.post(
-    "http://localhost:3000/api/logout",
+    "https://food-shop-backend-production-5a9f.up.railway.app/api/logout",
     {},
     {
       withCredentials: true,

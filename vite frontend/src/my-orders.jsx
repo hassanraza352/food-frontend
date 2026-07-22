@@ -16,7 +16,7 @@ function My_orders(){
   useEffect(() => {
 
     axios.get(
-        "http://localhost:3000/api/my-orders",
+        "https://food-shop-backend-production-5a9f.up.railway.app/api/my-orders",
         {
             withCredentials: true
         }
